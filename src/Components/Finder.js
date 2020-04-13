@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import Url from "./Url";
-import Repo from './repo';
-// import RepoUrl from './repo_url'
+import Repo from "./repo";
+ import RepoUrl from "./repo_url";
 import { TextField, Paper } from "@material-ui/core";
 
 export class Finder extends Component {
   constructor(props) {
     super(props);
-    this.state = { query: "",GithubProfile:"" };
+    this.state = { query: "", GithubProfile: "",  public_repo: "" };
   }
 
   handleInputChange = (e) => {
@@ -18,18 +18,26 @@ export class Finder extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("komal");
+    
     const response = await Url.get("users", {
       params: {
         q: this.state.query,
       },
     });
-   
-     console.log(response);
+
+    console.log(response);
     // const resp = await RepoUrl.get(`/${this.state.query}/repos`);
-    //  console.log(resp);
-     this.setState({ GithubProfile: response.data.items});
-   
+    // console.log(resp);
+
+    const public_repo = await RepoUrl.get(`/${this.state.query}`);
+    console.log(public_repo.data);
+
+
+    this.setState({
+      GithubProfile: response.data.items,
+      
+      public: public_repo.data,
+    });
   };
 
   render() {
@@ -47,7 +55,7 @@ export class Finder extends Component {
             ></TextField>
           </form>
         </Paper>
-        {this.state.GithubProfile !== '' && (<Repo {...this.state} />)}
+        {this.state.GithubProfile !== "" && <Repo {...this.state} />}
       </div>
     );
   }
