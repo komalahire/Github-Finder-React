@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import Url from "./Url";
 import Repo from "./repo";
- import RepoUrl from "./repo_url";
+import RepoUrl from "./repo_url";
 import { TextField, Paper } from "@material-ui/core";
 
 export class Finder extends Component {
   constructor(props) {
     super(props);
-    this.state = { query: "", GithubProfile: "",  public_repo: "" };
+    this.state = { query: "", GithubProfile: "", repo: "", public_repo: "" };
   }
 
   handleInputChange = (e) => {
@@ -18,7 +18,7 @@ export class Finder extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    
+    console.log("komal");
     const response = await Url.get("users", {
       params: {
         q: this.state.query,
@@ -26,8 +26,8 @@ export class Finder extends Component {
     });
 
     console.log(response);
-    // const resp = await RepoUrl.get(`/${this.state.query}/repos`);
-    // console.log(resp);
+    const resp = await RepoUrl.get(`/${this.state.query}/repos`);
+    console.log(resp);
 
     const public_repo = await RepoUrl.get(`/${this.state.query}`);
     console.log(public_repo.data);
@@ -35,11 +35,12 @@ export class Finder extends Component {
 
     this.setState({
       GithubProfile: response.data.items,
-      
+      repo: resp.data,
       public: public_repo.data,
     });
   };
 
+  
   render() {
     return (
       <div>

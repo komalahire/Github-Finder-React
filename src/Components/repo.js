@@ -5,7 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
 
 function Repo(props) {
-  const { GithubProfile, public_repo } = props;
+  const { GithubProfile, repo, public_repo } = props;
   console.log(props);
   return (
     <div>
@@ -70,6 +70,86 @@ function Repo(props) {
           </CardContent>
         </Card>
       ))}
+
+      <div
+        style={{
+          marginLeft: "450px",
+          display: "inline-block",
+          marginTop: "-400px",
+        }}
+      >
+        {repo.map((profile) => (
+          <Card
+            style={{
+              width: "425px",
+              display: "inline-block",
+              marginLeft: "50px",
+            }}
+          >
+            <CardContent>
+              <Typography color="textSecondary" gutterBottom>
+                <a
+                  href={profile.html_url}
+                  style={{
+                    fontSize: "15px",
+                    textDecoration: "none",
+                    display: "table-cell",
+                  }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {profile.name}
+                </a>
+                <p>
+                  <a
+                    href={profile.html_url}
+                    style={{
+                      fontSize: "13px",
+                      lineHeight: "0",
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {profile.full_name}
+                  </a>
+                </p>
+                <p style={{ fontSize: "13px" }}>{profile.description}</p>
+                <p style={{ fontSize: "15px", display: "inline-block" }}>
+                  {profile.language}
+                </p>
+                <span
+                  style={{
+                    backgroundColor: "#0275d8",
+                    marginLeft: "100px",
+                    padding: "3px 10px 3px 10px",
+                  }}
+                >
+                  {profile.forks_count}Fork
+                </span>
+                <span
+                  style={{
+                    backgroundColor: "#d9534f",
+                    padding: "3px 10px 3px 10px",
+                  }}
+                >
+                  {profile.watchers_count}watchers
+                </span>
+                <span
+                  style={{
+                    backgroundColor: "#4CAF50 ",
+                    padding: "3px 10px 3px 10px",
+                  }}
+                >
+                  {profile.stargazers_count}star
+                </span>
+                <p>{profile.created_at}</p>
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
